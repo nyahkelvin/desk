@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="Basizi - Help Desk System"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:panelGroup id="messagePanel" layout="block">
+                <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
+            </h:panelGroup>
+            <div class="bs-callout bs-callout-warning fade in">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                <h4>Job Details</h4>
+                <h:panelGrid columns="4" style="width: 100%">
+                    <h:outputText value="#{bundle.ViewContractorLabel_id}"/>
+                    <h:outputText value="#{contractorController.selected.id}" title="#{bundle.ViewContractorTitle_id}"/>
+                    <h:outputText value="#{bundle.ViewContractorLabel_name}"/>
+                    <h:outputText value="#{contractorController.selected.name}" title="#{bundle.ViewContractorTitle_name}"/>
+                    <h:outputText value="#{bundle.ViewContractorLabel_telephone}"/>
+                    <h:outputText value="#{contractorController.selected.telephone}" title="#{bundle.ViewContractorTitle_telephone}"/>
+                    <h:outputText value="#{bundle.ViewContractorLabel_email}"/>
+                    <h:outputText value="#{contractorController.selected.email}" title="#{bundle.ViewContractorTitle_email}"/>
+                    <h:outputText value="#{bundle.ViewContractorLabel_cellNumber}"/>
+                    <h:outputText value="#{contractorController.selected.cellNumber}" title="#{bundle.ViewContractorTitle_cellNumber}"/>
+                    <h:outputText value="#{bundle.ViewContractorLabel_address}"/>
+                    <h:outputText value="#{contractorController.selected.address}" title="#{bundle.ViewContractorTitle_address}"/>
+                    <h:outputText value="#{bundle.ViewContractorLabel_category}"/>
+                    <h:outputText value="#{contractorController.selected.category.name}" title="#{bundle.ViewContractorTitle_category}"/>
+                </h:panelGrid>
+            </div>
+
+            <div class="pull-right">
+                <div class="btn-group dropup mr10">
+                    <button type="button" class="btn btn-primary">Perform Actions</button>
+                    <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                        <span class="caret"></span>
+                        <span class="sr-only">Toggle Dropdown</span>
+                    </button>
+                    <ul class="dropdown-menu" role="menu" >
+                        <li>
+                            <h:commandLink  action="#{contractorController.prepareEdit()}" rendered="#{loginController.loggedInUser.role eq 'admin'}" value="Edit" immediate="true">
+                                <f:setPropertyActionListener target="#{contractorController.selectedContractor}" value="#{contractorController.selected}"/>
+                            </h:commandLink>
+                        </li>
+                        <div class="divider"></div>
+                        <li data-toggle="modal" data-target="#paymentModal" >
+                            <h:commandLink rendered="#{loginController.loggedInUser.role eq 'admin'}" onclick="javascript:return false" action="#{contractorController.prepareCreate()}">Create Budget</h:commandLink>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <br/>
+            <!-- Start Payment table -->
+            <div class="row">
+                <div class="col-lg-12">
+                    <!-- col-lg-12 start here -->
+                    <div class="panel panel-default plain toggle panelMove panelClose panelRefresh">
+                        <!-- Start .panel -->
+                        <div class="panel-heading">
+                            <h4 class="panel-title">Contractor Budget</h4>
+                        </div>
+                        <div class="panel-body">
+
+                            <p:dataTable paginator="true" value="#{contractorBudgetController.items}" var="item" id="customer_list" 
+                                         rows="10" resizableColumns="true" paginatorPosition="bottom"
+                                         paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                         rowsPerPageTemplate="10,20,30"  >
+                             
+                                <p:column>
+                                    <f:facet name="header">
+                                        <h:outputText value="#{bundle.ListContractorBudgetTitle_year}"/>
+                                    </f:facet>
+                                    <h:outputText value="#{item.year}"/>
+                                </p:column>
+                                <p:column>
+                                    <f:facet name="header">
+                                        <h:outputText value="#{bundle.ListContractorBudgetTitle_amount}"/>
+                                    </f:facet>
+                                    <h:outputText value="#{item.amount}">
+                                        <f:convertNumber pattern="#0.00" />
+                                    </h:outputText>
+                                </p:column>
+                                
+                                <p:column>
+                                    <f:facet name="header">
+                                        <h:outputText value="&nbsp;"/>
+                                    </f:facet>
+                                    <h:commandLink class="fa fa-remove fa-fw" immediate="true" style="text-decoration: none;" action="#{contractorBudgetController.destroy}" >
+                                        <f:setPropertyActionListener target="#{contractorBudgetController.selectedContractorBudget}" value="#{item}"/>
+                                    </h:commandLink>
+                                </p:column>
+                            </p:dataTable>
+
+
+                        </div>
+                    </div>
+                    <!-- End .panel -->
+                </div>
+
+            </div>
+            <!-- End Payment table -->
+
+            <!-- Start Payment Modal -->
+            <div class="modal fade" id="paymentModal" tabindex="-1" role="dialog" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">
+                                <span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+                            </button>
+                            <h4 class="modal-title" id="paymentModalLabel2">Create Current Budget</h4>
+                        </div>
+                        <div class="modal-body">
+                            <!-- Start .panel -->
+                            <div class="panel-body">
+                                <div class="form-horizontal" role="form">
+                                    <div class="form-group">
+                                        <div class="col-lg-12">
+                                            <div class="row">
+                                                <!-- Start .row -->  
+                                                <div class="row">
+                                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                                        <h:outputLabel value="#{bundle.CreateContractorBudgetLabel_amount}" for="amount" />
+                                                        <h:inputText class="form-control" id="amount" value="#{contractorBudgetController.selected.amount}" title="#{bundle.CreateContractorBudgetTitle_amount}" required="true" requiredMessage="#{bundle.CreateContractorBudgetRequiredMessage_amount}"/>
+                                                    </div>
+                                                </div>
+                                                <!-- End .row -->
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <!-- End Payment Modal-->
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                <h:commandLink action="#{contractorBudgetController.create}"  value="Save changes" class="btn btn-primary">
+                                    <f:setPropertyActionListener target="#{contractorBudgetController.selectedContractor}" value="#{contractorController.selected}" />
+                                </h:commandLink>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+                <!-- End Payment Modal -->
+
+        </ui:define>
+    </ui:composition>
+
+</html>

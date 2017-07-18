@@ -1,0 +1,506 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="job_staff_reminder_automated" pageWidth="1000" pageHeight="612" whenNoDataType="NoDataSection" columnWidth="960" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="ce5e5a61-9e3b-4145-98c8-530812ef2ff6">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="Crosstab Data Text" hAlign="Center"/>
+	<parameter name="logoImagePath" class="java.lang.String"/>
+	<parameter name="status" class="java.lang.String"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["/Users/kelvinashu/Documents/NetBeansProjects/hcm/web/WEB-INF/jasperReports/"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="staffID" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT CONCAT('CRM',i.id) AS REF,datediff(NOW(),created_date) overdue,
+names AS AssignedTo,i.description, il.address_line1,surb.name As Suburb,
+i.created_date,i.due_date,sc.name AS CurrentStatus,
+i.work_order_number AS WorkOrder, (select name from crm.incident_type where id =i.incident_type) AS IncidentType,
+itcat.name AS IncidentTypeCategory
+FROM crm.incident i
+LEFT JOIN crm.status_codes sc ON i.status = sc.id
+LEFT JOIN crm.incident_type_category itcat ON i.incident_type_category = itcat.id
+LEFT JOIN crm.staff st ON st.id = i.staff
+LEFT JOIN crm.incident_location il ON il.id = i.location
+LEFT JOIN crm.suburb_area surb ON surb.id = il.address_line2
+
+WHERE i.created_date >=  '2017/04/01' AND i.created_date <= '2017/04/30'
+
+ORDER BY IncidentType,itcat.name,names,sc.name]]>
+	</queryString>
+	<field name="REF" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="overdue" class="java.lang.Integer"/>
+	<field name="AssignedTo" class="java.lang.String"/>
+	<field name="description" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="address_line1" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Suburb" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="created_date" class="java.sql.Timestamp">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="due_date" class="java.sql.Timestamp">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="CurrentStatus" class="java.lang.String"/>
+	<field name="WorkOrder" class="java.lang.String"/>
+	<field name="IncidentType" class="java.lang.String"/>
+	<field name="IncidentTypeCategory" class="java.lang.String"/>
+	<variable name="variable1" class="java.lang.String"/>
+	<variable name="REF_1" class="java.lang.Integer" calculation="Count">
+		<variableExpression><![CDATA[$F{REF}]]></variableExpression>
+	</variable>
+	<variable name="REF_2" class="java.lang.Integer" resetType="Page" calculation="Count">
+		<variableExpression><![CDATA[$F{REF}]]></variableExpression>
+	</variable>
+	<variable name="IncidentTypeCategory_1" class="java.lang.Integer" calculation="Count">
+		<variableExpression><![CDATA[$F{IncidentTypeCategory}]]></variableExpression>
+	</variable>
+	<variable name="IncidentTypeCategory_2" class="java.lang.Integer" calculation="Count">
+		<variableExpression><![CDATA[$F{IncidentTypeCategory}]]></variableExpression>
+	</variable>
+	<variable name="totalgroupcategory" class="java.lang.Integer" resetType="Group" resetGroup="category_group" calculation="Count">
+		<variableExpression><![CDATA[$F{IncidentTypeCategory}]]></variableExpression>
+	</variable>
+	<group name="category_group">
+		<groupExpression><![CDATA[$F{IncidentTypeCategory}]]></groupExpression>
+		<groupHeader>
+			<band height="17">
+				<textField>
+					<reportElement uuid="354869d5-381a-48a6-b9b4-d7dc7ca1a458" mode="Opaque" x="141" y="0" width="190" height="15" forecolor="#4A4A4A" backcolor="#FFC800"/>
+					<textElement verticalAlignment="Middle" rotation="None" markup="none">
+						<font fontName="SansSerif" size="7" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+						<paragraph lineSpacing="Single"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{IncidentTypeCategory}]]></textFieldExpression>
+				</textField>
+				<textField pattern="" isBlankWhenNull="false">
+					<reportElement uuid="909554e4-29c6-4057-a661-0843e9d0f731" mode="Opaque" x="2" y="0" width="139" height="15" forecolor="#4A4A4A" backcolor="#FFC800"/>
+					<textElement verticalAlignment="Middle" rotation="None" markup="none">
+						<font fontName="SansSerif" size="7" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+						<paragraph lineSpacing="Single"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{IncidentType}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="18">
+				<staticText>
+					<reportElement uuid="2d4d6ae0-25cb-40f0-b5cc-8422d5813c0d" x="401" y="2" width="50" height="15"/>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[Total:]]></text>
+				</staticText>
+				<textField>
+					<reportElement uuid="446b9e23-7304-4f63-99bd-43054168c80b" mode="Transparent" x="452" y="2" width="97" height="15" forecolor="#000000" backcolor="#FFFFFF"/>
+					<textElement verticalAlignment="Top" rotation="None" markup="none">
+						<font fontName="SansSerif" size="10" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+						<paragraph lineSpacing="Single"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{totalgroupcategory}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupFooter>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="100" splitType="Stretch">
+			<image>
+				<reportElement uuid="956df1b2-e645-46fa-80dc-c34aee03bd17" x="1" y="2" width="100" height="79"/>
+				<imageExpression><![CDATA[$P{logoImagePath}]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement uuid="df59ff8a-b9f2-425b-a7ad-24c609b5326d" x="680" y="23" width="179" height="21" forecolor="#999999"/>
+				<textElement>
+					<font fontName="SansSerif" size="14" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Pending Incidents:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="2bf3cede-dc36-4220-8ae4-d3d6fd3baeae" x="680" y="3" width="116" height="20" forecolor="#999999"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[computer generated]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="086b2ae3-df7f-47de-9eeb-091becbc3dfe" x="680" y="56" width="100" height="12" forecolor="#999999"/>
+				<textElement>
+					<font size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[(new java.text.SimpleDateFormat("yyyy/MM/dd HH:mm:ss"))
+.format(
+ Calendar.getInstance().getTime()
+)]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement uuid="dec219cf-6280-4e8e-811f-835955575475" mode="Transparent" x="810" y="23" width="100" height="20" forecolor="#999999" backcolor="#FFFFFF"/>
+				<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" markup="none">
+					<font fontName="SansSerif" size="14" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{IncidentTypeCategory_2}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="8" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="18" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="ce24910f-8223-4346-8f47-dac1f5297900" mode="Opaque" x="2" y="0" width="26" height="15" forecolor="#4A4A4A" backcolor="#C0C0C0"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="SansSerif" size="7" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+				</textElement>
+				<text><![CDATA[#]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="3efcc065-5454-4896-a98e-03b70858fdd2" mode="Opaque" x="29" y="0" width="46" height="15" forecolor="#4A4A4A" backcolor="#C0C0C0"/>
+				<textElement verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="SansSerif" size="7" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+				</textElement>
+				<text><![CDATA[Ref]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="691105b1-63c9-41ab-84d7-404d20efaab7" mode="Opaque" x="76" y="0" width="79" height="15" forecolor="#4A4A4A" backcolor="#C0C0C0"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="SansSerif" size="7" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+				</textElement>
+				<text><![CDATA[Assigned To]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="09f444d3-0618-4e38-ab6d-d2035b488741" mode="Opaque" x="156" y="0" width="98" height="15" forecolor="#4A4A4A" backcolor="#C0C0C0"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="SansSerif" size="7" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+				</textElement>
+				<text><![CDATA[Date Created]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="ab3ba3f1-c6ca-42b4-9a45-9ce63ea1afe9" mode="Opaque" x="255" y="0" width="136" height="15" forecolor="#4A4A4A" backcolor="#C0C0C0"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="SansSerif" size="7" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+				</textElement>
+				<text><![CDATA[Current Status]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="285abb62-2c25-4b3e-95a3-d6a25457305b" mode="Opaque" x="610" y="0" width="348" height="15" forecolor="#4A4A4A" backcolor="#C0C0C0"/>
+				<textElement verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="SansSerif" size="7" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+				</textElement>
+				<text><![CDATA[Description]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="09f444d3-0618-4e38-ab6d-d2035b488741" mode="Opaque" x="392" y="0" width="59" height="15" forecolor="#4A4A4A" backcolor="#C0C0C0"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="SansSerif" size="7" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+				</textElement>
+				<text><![CDATA[WO #]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="09f444d3-0618-4e38-ab6d-d2035b488741" mode="Opaque" x="452" y="0" width="97" height="15" forecolor="#4A4A4A" backcolor="#C0C0C0"/>
+				<textElement verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="SansSerif" size="7" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+				</textElement>
+				<text><![CDATA[Category]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="09f444d3-0618-4e38-ab6d-d2035b488741" mode="Opaque" x="550" y="0" width="59" height="15" forecolor="#4A4A4A" backcolor="#C0C0C0"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="SansSerif" size="7" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+				</textElement>
+				<text><![CDATA[Overdue]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="17" splitType="Stretch">
+			<line>
+				<reportElement uuid="e9a15a5e-359a-4caa-887f-c9251ae11810" x="1" y="14" width="957" height="1"/>
+			</line>
+			<textField pattern="" isBlankWhenNull="false">
+				<reportElement uuid="87b8ef41-028d-4bee-a138-bd8986244533" mode="Transparent" x="29" y="0" width="46" height="14" forecolor="#000000" backcolor="#FFFFFF"/>
+				<textElement verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="SansSerif" size="7" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{REF}]]></textFieldExpression>
+			</textField>
+			<textField pattern="" isBlankWhenNull="true">
+				<reportElement uuid="6705e7a3-e080-45f8-8733-44845ed35b5b" mode="Transparent" x="75" y="0" width="80" height="14" forecolor="#000000" backcolor="#FFFFFF"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="SansSerif" size="7" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{AssignedTo}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy HH.mm.ss" isBlankWhenNull="false">
+				<reportElement uuid="109b2cb5-ed65-42ec-b4a7-26edda9c28dd" mode="Transparent" x="155" y="0" width="99" height="14" forecolor="#000000" backcolor="#FFFFFF"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="SansSerif" size="7" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{created_date}]]></textFieldExpression>
+			</textField>
+			<textField pattern="" isBlankWhenNull="false">
+				<reportElement uuid="35ae7783-8a32-433a-ae9e-38c15acb1c5d" mode="Transparent" x="254" y="0" width="137" height="14" forecolor="#000000" backcolor="#FFFFFF"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="SansSerif" size="7" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{CurrentStatus}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy HH.mm.ss" isBlankWhenNull="false">
+				<reportElement uuid="56c0b003-4180-43ff-acf9-831cf6cadf3d" mode="Transparent" x="610" y="0" width="349" height="14" forecolor="#000000" backcolor="#FFFFFF"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="SansSerif" size="7" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{description}]]></textFieldExpression>
+			</textField>
+			<textField pattern="" isBlankWhenNull="false">
+				<reportElement uuid="c1d95618-2b02-466a-a726-fc1141bcd391" mode="Transparent" x="2" y="0" width="26" height="14" forecolor="#000000" backcolor="#FFFFFF"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="SansSerif" size="7" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{REPORT_COUNT}]]></textFieldExpression>
+			</textField>
+			<textField pattern="" isBlankWhenNull="true">
+				<reportElement uuid="87b8ef41-028d-4bee-a138-bd8986244533" mode="Transparent" x="392" y="1" width="59" height="14" forecolor="#000000" backcolor="#FFFFFF"/>
+				<textElement verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="SansSerif" size="7" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{WorkOrder}]]></textFieldExpression>
+			</textField>
+			<textField pattern="" isBlankWhenNull="true">
+				<reportElement uuid="87b8ef41-028d-4bee-a138-bd8986244533" mode="Transparent" x="452" y="1" width="97" height="14" forecolor="#000000" backcolor="#FFFFFF"/>
+				<textElement verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="SansSerif" size="7" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{IncidentTypeCategory}]]></textFieldExpression>
+			</textField>
+			<textField pattern="" isBlankWhenNull="true">
+				<reportElement uuid="87b8ef41-028d-4bee-a138-bd8986244533" mode="Transparent" x="550" y="0" width="59" height="14" forecolor="#000000" backcolor="#FFFFFF"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="SansSerif" size="7" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{overdue}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch">
+			<textField>
+				<reportElement uuid="107e94a6-d05c-4cdd-9133-9f52bc754b5d" x="838" y="34" width="80" height="20"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement uuid="fe9cbcaa-4426-4b54-9551-3d6a95f9ee7e" x="918" y="34" width="40" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="126" splitType="Stretch">
+			<crosstab>
+				<reportElement uuid="a9e5fba0-e873-4ba6-89a0-25f65a985759" x="0" y="0" width="960" height="126"/>
+				<rowGroup name="IncidentType" width="70" totalPosition="End">
+					<bucket class="java.lang.String">
+						<bucketExpression><![CDATA[$F{IncidentType}]]></bucketExpression>
+					</bucket>
+					<crosstabRowHeader>
+						<cellContents backcolor="#F0F8FF" mode="Opaque">
+							<box>
+								<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+							</box>
+							<textField>
+								<reportElement uuid="f27b996f-608c-4b52-80b1-fa25b7a6c90f" style="Crosstab Data Text" x="0" y="0" width="70" height="10"/>
+								<textElement>
+									<font size="8"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$V{IncidentType}]]></textFieldExpression>
+							</textField>
+						</cellContents>
+					</crosstabRowHeader>
+					<crosstabTotalRowHeader>
+						<cellContents backcolor="#005FB3" mode="Opaque">
+							<box>
+								<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+							</box>
+							<staticText>
+								<reportElement uuid="c9930705-1cad-443d-9376-cc2071acda29" x="0" y="0" width="267" height="10" forecolor="#FFFFFF"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="8"/>
+								</textElement>
+								<text><![CDATA[Total IncidentType]]></text>
+							</staticText>
+						</cellContents>
+					</crosstabTotalRowHeader>
+				</rowGroup>
+				<rowGroup name="IncidentTypeCategory" width="197" totalPosition="End">
+					<bucket class="java.lang.String">
+						<bucketExpression><![CDATA[$F{IncidentTypeCategory}]]></bucketExpression>
+					</bucket>
+					<crosstabRowHeader>
+						<cellContents backcolor="#F0F8FF" mode="Opaque">
+							<box>
+								<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+							</box>
+							<textField>
+								<reportElement uuid="57364fef-4f43-480b-a4c6-1553bcd34a46" style="Crosstab Data Text" x="0" y="0" width="197" height="10"/>
+								<textElement>
+									<font size="8"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$V{IncidentTypeCategory}]]></textFieldExpression>
+							</textField>
+						</cellContents>
+					</crosstabRowHeader>
+					<crosstabTotalRowHeader>
+						<cellContents backcolor="#BFE1FF" mode="Opaque">
+							<box>
+								<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+							</box>
+							<staticText>
+								<reportElement uuid="a0a3d6ea-0d6a-43c2-ba30-e9f6146c0101" x="0" y="0" width="197" height="10"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="8"/>
+								</textElement>
+								<text><![CDATA[Total IncidentTypeCategory]]></text>
+							</staticText>
+						</cellContents>
+					</crosstabTotalRowHeader>
+				</rowGroup>
+				<columnGroup name="CurrentStatus" height="86" totalPosition="End">
+					<bucket class="java.lang.String">
+						<bucketExpression><![CDATA[$F{CurrentStatus}]]></bucketExpression>
+					</bucket>
+					<crosstabColumnHeader>
+						<cellContents backcolor="#F0F8FF" mode="Opaque">
+							<box>
+								<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+							</box>
+							<textField>
+								<reportElement uuid="cf5deda1-947f-4756-961e-9bfdb887dfec" style="Crosstab Data Text" x="0" y="0" width="50" height="86"/>
+								<textElement rotation="Left">
+									<font size="8"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$V{CurrentStatus}]]></textFieldExpression>
+							</textField>
+						</cellContents>
+					</crosstabColumnHeader>
+					<crosstabTotalColumnHeader>
+						<cellContents backcolor="#BFE1FF" mode="Opaque">
+							<box>
+								<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+							</box>
+							<staticText>
+								<reportElement uuid="1486a5d5-c59c-4ef7-970f-bcf5acf9205e" x="0" y="0" width="77" height="86"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle" rotation="Left">
+									<font size="8"/>
+								</textElement>
+								<text><![CDATA[Total Incidents]]></text>
+							</staticText>
+						</cellContents>
+					</crosstabTotalColumnHeader>
+				</columnGroup>
+				<measure name="CurrentStatusMeasure" class="java.lang.Integer" calculation="Count">
+					<measureExpression><![CDATA[$F{CurrentStatus}]]></measureExpression>
+				</measure>
+				<crosstabCell width="50" height="10">
+					<cellContents>
+						<box>
+							<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						</box>
+						<textField>
+							<reportElement uuid="f106f615-363f-47c3-8da7-660481c1c409" style="Crosstab Data Text" x="0" y="0" width="50" height="10"/>
+							<textElement>
+								<font size="8"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$V{CurrentStatusMeasure}]]></textFieldExpression>
+						</textField>
+					</cellContents>
+				</crosstabCell>
+				<crosstabCell width="50" height="11" rowTotalGroup="IncidentType">
+					<cellContents backcolor="#005FB3" mode="Opaque">
+						<box>
+							<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						</box>
+						<textField>
+							<reportElement uuid="d038ff5a-e777-427c-a444-c2ef28804f73" style="Crosstab Data Text" x="0" y="0" width="50" height="10" forecolor="#FFFFFF"/>
+							<textElement>
+								<font size="8"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$V{CurrentStatusMeasure}]]></textFieldExpression>
+						</textField>
+					</cellContents>
+				</crosstabCell>
+				<crosstabCell width="79" height="10" columnTotalGroup="CurrentStatus">
+					<cellContents backcolor="#BFE1FF" mode="Opaque">
+						<box>
+							<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						</box>
+						<textField>
+							<reportElement uuid="59e2d1f7-496f-4512-9f7e-76a5b1a7e6ae" style="Crosstab Data Text" x="0" y="0" width="77" height="10"/>
+							<textElement>
+								<font size="8"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$V{CurrentStatusMeasure}]]></textFieldExpression>
+						</textField>
+					</cellContents>
+				</crosstabCell>
+				<crosstabCell width="79" height="11" rowTotalGroup="IncidentType" columnTotalGroup="CurrentStatus">
+					<cellContents backcolor="#005FB3" mode="Opaque">
+						<box>
+							<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						</box>
+						<textField>
+							<reportElement uuid="43e33ffe-2120-4ba9-a8e9-fbb1359e752e" style="Crosstab Data Text" x="0" y="0" width="77" height="10" forecolor="#FFFFFF"/>
+							<textElement>
+								<font size="8"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$V{CurrentStatusMeasure}]]></textFieldExpression>
+						</textField>
+					</cellContents>
+				</crosstabCell>
+				<crosstabCell width="50" height="10" rowTotalGroup="IncidentTypeCategory">
+					<cellContents backcolor="#BFE1FF" mode="Opaque">
+						<box>
+							<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						</box>
+						<textField>
+							<reportElement uuid="5ba04d59-5674-400d-978f-379980f15e33" style="Crosstab Data Text" x="0" y="0" width="50" height="10"/>
+							<textElement>
+								<font size="8"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$V{CurrentStatusMeasure}]]></textFieldExpression>
+						</textField>
+					</cellContents>
+				</crosstabCell>
+				<crosstabCell width="79" height="10" rowTotalGroup="IncidentTypeCategory" columnTotalGroup="CurrentStatus">
+					<cellContents backcolor="#BFE1FF" mode="Opaque">
+						<box>
+							<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						</box>
+						<textField>
+							<reportElement uuid="a29db552-0c04-4846-a6e2-d956a241ee82" style="Crosstab Data Text" x="0" y="0" width="77" height="10"/>
+							<textElement>
+								<font size="8"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$V{CurrentStatusMeasure}]]></textFieldExpression>
+						</textField>
+					</cellContents>
+				</crosstabCell>
+			</crosstab>
+		</band>
+	</summary>
+</jasperReport>

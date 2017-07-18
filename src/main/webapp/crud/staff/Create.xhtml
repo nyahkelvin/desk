@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="Basizi - Create New Staff"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:panelGroup id="messagePanel" layout="block">
+                <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
+            </h:panelGroup>
+            <div class="panel panel-default toggle panelMove panelClose panelRefresh">
+                <!-- Start .panel -->
+                <div class="panel-heading">
+                    <h4 class="panel-title"><h:outputText value="#{bundle.CreateStaffTitle}"></h:outputText></h4>
+                </div>
+                <div class="panel-body">
+                    <div class="form-horizontal" role="form">
+                        <div class="form-group">
+                            <div class="col-lg-12">
+                                <div class="row">
+                                    <!-- Start .row -->                                                        
+                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                        <h:outputLabel value="#{bundle.CreateStaffLabel_surname}" for="surname" />
+                                        <h:inputText id="surname" value="#{staffController.selected.surname}" class="form-control" title="#{bundle.CreateStaffTitle_surname}" required="true" requiredMessage="#{bundle.CreateStaffRequiredMessage_surname}"/>
+                                    </div>
+                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                        <h:outputLabel value="#{bundle.CreateStaffLabel_names}" for="names" />
+                                        <h:inputText id="names" value="#{staffController.selected.names}" class="form-control" title="#{bundle.CreateStaffTitle_names}" required="true" requiredMessage="#{bundle.CreateStaffRequiredMessage_names}"/>
+                                    </div>
+                                </div>
+                                <!-- End .row -->
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-lg-12">
+                                <div class="row">
+                                    <!-- Start .row -->                                                        
+                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                        <h:outputLabel value="#{bundle.CreateStaffLabel_email}" for="email" />
+                                        <h:inputText id="email" value="#{staffController.selected.email}" class="form-control" title="#{bundle.CreateStaffTitle_email}" required="true" requiredMessage="#{bundle.CreateStaffRequiredMessage_email}"/>
+                                    </div>
+                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                        <h:outputLabel value="#{bundle.CreateStaffLabel_cellNumber}" for="cellNumber" />
+                                        <h:inputText id="cellNumber" value="#{staffController.selected.cellNumber}" class="form-control" title="#{bundle.CreateStaffTitle_cellNumber}" required="true" requiredMessage="#{bundle.CreateStaffRequiredMessage_cellNumber}"/>
+                                    </div>
+                                </div>
+                                <!-- End .row -->
+                            </div>
+                        </div>
+                        <!-- End .form-group  -->
+                        <div class="form-group">
+                            <div class="col-lg-12">
+                                <div class="row">
+                                    <!-- Start .row -->
+                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 text-left">
+                                        <h:commandLink action="#{staffController.create()}" value="Save Staff" class="btn btn-primary"></h:commandLink>
+                                    </div>
+                                </div>
+                                <!-- End .row -->
+                            </div>
+                        </div>
+                        <!-- End .form-group  -->
+                    </div>
+                </div>
+            </div>
+
+        </ui:define>
+    </ui:composition>
+
+</html>

@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="job_staff_reminder_2_incident_type_count" pageWidth="500" pageHeight="555" orientation="Landscape" columnWidth="500" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="49c8d853-40b3-4687-b3c2-894e5fcfead2">
+	<property name="ireport.zoom" value="2.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<queryString>
+		<![CDATA[SELECT status,
+COUNT(status) AS status_count,
+st.name AS status_name,
+it.name AS incident_type
+
+FROM crm.incident i
+JOIN crm.status_codes st on st.id = i.status
+JOIN crm.incident_type it on it.id = i.incident_type
+
+GROUP BY status,it.name
+ORDER BY incident_type,status_name,status_count]]>
+	</queryString>
+	<field name="status" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="status_count" class="java.lang.Long"/>
+	<field name="status_name" class="java.lang.String"/>
+	<field name="incident_type" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="12afabac-ed7f-4c16-a317-aad02ac9288c" x="135" y="37" width="245" height="20"/>
+				<textElement textAlignment="Center">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Job Type Report]]></text>
+			</staticText>
+		</band>
+	</title>
+	<columnHeader>
+		<band height="26" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="6c4ad963-3415-4e21-b827-9c2e4992aaf2" x="11" y="6" width="183" height="20"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Incident Type]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="f565d324-1d7a-4e9c-9b43-aca5b344cfd8" x="293" y="6" width="207" height="20"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Status Name]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="addbe9a7-9d72-4ab9-a8e7-f5d291e46a32" x="195" y="6" width="98" height="20"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="12" splitType="Stretch">
+			<textField>
+				<reportElement uuid="554bca4a-8cb7-4257-8fb4-0a0952f693c5" x="11" y="1" width="183" height="10"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{incident_type}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="345d9057-1ddf-42e9-8580-06129a232f7d" x="293" y="1" width="207" height="10"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{status_name}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement uuid="5b420982-531d-44dd-9d6d-0802e96d10dc" x="0" y="0" width="500" height="1"/>
+			</line>
+			<textField>
+				<reportElement uuid="2c23abbf-fc33-4575-8af6-96c273d93d88" x="194" y="1" width="98" height="10"/>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{status_count}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

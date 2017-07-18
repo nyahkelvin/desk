@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="billing_statement_generated" language="groovy" pageWidth="612" pageHeight="792" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="bc97a7c4-422f-41c3-affe-2125bc4c8207">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch">
+			<image>
+				<reportElement uuid="d69d0e34-3586-4488-907d-a0ac5ba747ea" x="514" y="0" width="58" height="61"/>
+				<imageExpression><![CDATA["/Users/kelvinashu/Documents/NetBeansProjects/crmScheduleSMSandEmail/web/WEB-INF/jasperReports/jeo_qgabi.jpg"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement uuid="174ebe52-7570-43d3-a573-0fce55f4d795" x="28" y="20" width="100" height="12"/>
+				<textElement>
+					<font size="6"/>
+				</textElement>
+				<text><![CDATA[manage your bill via USSD]]></text>
+			</staticText>
+			<image>
+				<reportElement uuid="14c39375-1415-4060-8d53-51b5e9758751" x="2" y="-5" width="26" height="25"/>
+				<imageExpression><![CDATA["/Users/kelvinashu/Documents/NetBeansProjects/crmScheduleSMSandEmail/web/WEB-INF/jasperReports/settings.png"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement uuid="e8072954-e1a6-430f-9667-002f3a1e56b2" x="28" y="0" width="100" height="20" forecolor="#3333FF"/>
+				<textElement>
+					<font size="16"/>
+				</textElement>
+				<text><![CDATA[eServices]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="405183ac-516e-4512-b7d3-7c7c202d18c9" x="28" y="32" width="100" height="20"/>
+				<textElement/>
+				<text><![CDATA[*120*10210#]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="8bc01d4e-e2f6-4ddc-bcff-33217b7caa7a" x="228" y="30" width="100" height="20"/>
+				<textElement/>
+				<text><![CDATA[Static text]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="61" splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="125" splitType="Stretch"/>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="Basizi - Edit Job"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:panelGroup id="messagePanel" layout="block">
+                <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
+            </h:panelGroup>
+            <div class="panel panel-default toggle panelMove panelClose panelRefresh">
+                <!-- Start .panel -->
+                <div class="panel-heading">
+                    <h4 class="panel-title"><h:outputText value="#{bundle.EditJobTitle}"></h:outputText></h4>
+                </div>
+                <div class="panel-body">
+                    <div class="form-horizontal" role="form">
+                        <div class="form-group">
+                            <div class="col-lg-12">
+                                <div class="row">
+                                    <!-- Start .row -->                                                        
+                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                        <h:outputLabel value="#{bundle.CreateJobLabel_category}" for="category" />
+                                        <h:selectOneMenu disabled="#{jobController.selected.completed}" id="category" class="fancy-select form-control" value="#{jobController.selected.category}" title="#{bundle.CreateJobTitle_category}" required="true" requiredMessage="#{bundle.CreateJobRequiredMessage_category}">
+                                            <f:selectItems value="#{jobCategoryController.itemsAvailableSelectOne}"/>
+                                            <p:ajax update="subCategory" event="change"  listener="#{jobController.onChangeCategory}" />
+                                        </h:selectOneMenu>
+                                    </div>
+                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                        <h:outputLabel value="#{bundle.CreateJobLabel_subCategory}" for="subCategory" />
+                                        <h:selectOneMenu disabled="#{jobController.selected.completed}"  id="subCategory" class="fancy-select form-control" value="#{jobController.selected.subCategory}" title="#{bundle.CreateJobTitle_subCategory}" required="true" requiredMessage="#{bundle.CreateJobRequiredMessage_subCategory}">
+                                            <f:selectItems value="#{jobController.itemsAvailableSelectOneJobCategory}"/>
+                                        </h:selectOneMenu>
+                                    </div>
+                                </div>
+                                <!-- End .row -->
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-lg-12">
+                                <div class="row">
+                                    <!-- Start .row -->                                                        
+                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                        <h:outputLabel value="#{bundle.CreateJobLabel_priority}" for="priority" />
+                                        <h:selectOneMenu disabled="#{jobController.selected.completed}" id="priority" class="fancy-select form-control" value="#{jobController.selected.priority}" title="#{bundle.CreateJobTitle_priority}" required="true" requiredMessage="#{bundle.CreateJobRequiredMessage_priority}">
+                                            <f:selectItems value="#{jobPriorityController.itemsAvailableSelectOne}"/>
+                                        </h:selectOneMenu>
+                                    </div>
+                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                        <h:outputLabel value="#{bundle.CreateJobLabel_location}" for="location" />
+                                        <h:selectOneMenu disabled="#{jobController.selected.completed}" id="location" class="fancy-select form-control" value="#{jobController.selected.location}" title="#{bundle.CreateJobTitle_location}" required="true" requiredMessage="#{bundle.CreateJobRequiredMessage_location}">
+                                            <f:selectItems value="#{jobLocationController.itemsAvailableSelectOne}"/>
+                                        </h:selectOneMenu>
+                                    </div>
+                                </div>
+                                <!-- End .row -->
+                            </div>
+                        </div>
+                        <!-- End .form-group  -->
+                        <div class="form-group">
+                            <div class="col-lg-12">
+                                <div class="row">
+                                    <!-- Start .row -->    
+
+                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                        <h:outputLabel value="#{bundle.CreateJobLabel_contractor}" for="contractor" />
+                                        <h:selectOneMenu  disabled="#{jobController.selected.completed}" id="contractor" class="fancy-select form-control" value="#{jobController.selected.contractor}" title="#{bundle.CreateJobTitle_contractor}" >
+                                            <f:selectItems value="#{contractorController.itemsAvailableSelectOne}"/>
+                                        </h:selectOneMenu>
+                                    </div>
+
+                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                        <h:outputLabel value="Precaution" for="precaution" />
+                                        <h:selectOneMenu disabled="#{jobController.selected.completed}"  id="precaution" class="fancy-select form-control" value="#{jobController.selected.precaution}" title="#{bundle.CreateJobTitle_contractor}" >
+                                            <f:selectItem itemValue="" itemLabel="Select precuation" />
+                                            <f:selectItem itemValue="Occupied area" itemLabel="Occupied area" />
+                                            <f:selectItem itemValue="Vacant area" itemLabel="Vacant area" />
+                                        </h:selectOneMenu>
+                                    </div>
+                                </div>
+                                <!-- End .row -->
+                            </div>
+                        </div>
+
+                        <!-- End .form-group  -->
+                        <div class="form-group">
+                            <div class="col-lg-12">
+                                <div class="row">
+                                    <!-- Start .row -->    
+
+                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                        <h:outputLabel value="#{bundle.EditJobLabel_completed}" for="completed" />
+                                        <h:selectBooleanCheckbox  disabled="#{jobController.selected.completed}"  id="completed" class="form-control" value="#{jobController.selected.completed}" title="#{bundle.EditJobTitle_completed}" />
+                                    </div>
+
+                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                        <h:outputLabel value="#{bundle.EditJobLabel_invoicePaid}" for="invoicePaid" />
+                                        <h:selectBooleanCheckbox  id="invoicePaid" class="form-control" value="#{jobController.selected.invoicePaid}" title="#{bundle.EditJobTitle_invoicePaid}" />
+                                    </div>
+                                </div>
+                                <!-- End .row -->
+                            </div>
+                        </div>
+
+                        <!-- End .form-group  -->
+                        <div class="form-group">
+                            <div class="col-lg-12">
+                                <div class="row">
+                                    <!-- Start .row -->    
+
+                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                        <h:outputLabel value="#{bundle.EditJobLabel_baseBudget}" for="baseBudget" />
+                                        <h:inputText  disabled="#{jobController.selected.completed}"  id="baseBudget" class="form-control" value="#{jobController.selected.baseBudget}" title="#{bundle.EditJobTitle_baseBudget}" required="true" requiredMessage="#{bundle.EditJobRequiredMessage_baseBudget}">
+                                            <f:convertNumber pattern="#0.00" />
+                                        </h:inputText>
+
+                                    </div>
+
+                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                        <h:outputLabel value="Actual Cost" for="actualCost" />
+                                        <h:inputText  disabled="#{jobController.selected.invoicePaid}"   id="actualCost" class="form-control" value="#{jobController.selected.actualCost}" title="Actual Cost" required="false" requiredMessage="Actual Cost field is required">
+                                            <f:convertNumber pattern="#0.00" />
+                                        </h:inputText>
+
+                                    </div>                   
+                                </div>
+                                <!-- End .row -->
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-lg-12">
+                                <div class="row">
+                                    <!-- Start .row -->    
+                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                        <h:outputLabel value="Reporter" for="reporter" />
+                                        <h:inputText  disabled="#{jobController.selected.completed}"  class="form-control" id="reporter" value="#{jobController.selected.reporter}" title="Reporter" required="true" requiredMessage="The Reporter filed is required"/>
+                                    </div>
+                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                        <h:outputLabel value="Reporter Contact" for="reportCell" />
+                                        <h:inputText  disabled="#{jobController.selected.completed}"  class="form-control" id="reportCell" value="#{jobController.selected.reporterCell}" title="Reporter Cell" required="false" requiredMessage="Reporter Cell field is required"/>
+                                    </div>
+                                </div>
+                                <!-- End .row -->
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-lg-12">
+                                <div class="row">
+                                    <!-- Start .row --> 
+                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                        <h:outputLabel value="Physical Address" for="physicalAddress" />
+                                        <h:inputText disabled="#{jobController.selected.completed}"  class="form-control" id="physicalAddress" value="#{jobController.selected.physicalAddress}" title="Physical Address" required="true" requiredMessage="The Physical Address filed is required"/>
+                                    </div>
+                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                        <h:outputLabel value="#{bundle.EditJobLabel_completionDate}" for="completionDate" />
+                                        <p:calendar  disabled="#{jobController.selected.completed}"  id="completionDate" styleClass="form-control" value="#{jobController.selected.completionDate}" title="#{bundle.EditJobTitle_completionDate}" />
+                                    </div>
+                                </div>
+                                <!-- End .row -->
+                            </div>
+                        </div>
+
+
+                        <div class="form-group">
+                            <div class="col-lg-12">
+                                <div class="row">
+                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                        <h:outputLabel value="#{bundle.CreateJobLabel_description}" for="description" />
+                                        <h:inputTextarea  disabled="#{jobController.selected.completed}" cols="10" class="form-control" id="description" value="#{jobController.selected.description}" title="#{bundle.CreateJobTitle_description}" required="true" requiredMessage="#{bundle.CreateJobRequiredMessage_description}"/>
+                                    </div>
+                                </div>
+                                <!-- End .row -->
+                            </div>
+                        </div>
+
+                        <!-- End .form-group  -->
+                        <div class="form-group">
+                            <div class="col-lg-12">
+                                <div class="row">
+                                    <!-- Start .row -->
+                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 text-left">
+                                        <h:commandLink action="#{jobController.update()}" value="Save Job" class="btn btn-primary"></h:commandLink>
+                                    </div>
+                                </div>
+                                <!-- End .row -->
+                            </div>
+                        </div>
+                        <!-- End .form-group  -->
+                    </div>
+                </div>
+            </div>
+
+
+        </ui:define>
+    </ui:composition>
+
+</html>

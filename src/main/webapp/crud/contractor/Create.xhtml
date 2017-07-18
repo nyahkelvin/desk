@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="Basizi - Create New Customer"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:panelGroup id="messagePanel" layout="block">
+                <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
+            </h:panelGroup>
+            <div class="panel panel-default toggle panelMove panelClose panelRefresh">
+                <!-- Start .panel -->
+                <div class="panel-heading">
+                    <h4 class="panel-title">Create Contractor</h4>
+                </div>
+                <div class="panel-body">
+                    <div class="form-horizontal" role="form">
+                        <div class="form-group">
+                            <div class="col-lg-12">
+                                <div class="row">
+                                    <!-- Start .row -->                                                        
+                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                        <h:outputLabel value="Contractor Name" for="name" />
+                                        <h:inputText id="name" class="form-control"  value="#{contractorController.selected.name}" title="#{bundle.CreateContractorTitle_name}"  required="true" requiredMessage="Please provide contractor name"/>
+                                    </div>
+                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                        <h:outputLabel value="Telephone" for="telephone" />
+                                        <h:inputText id="telephone" class="form-control"  value="#{contractorController.selected.telephone}" title="#{bundle.CreateContractorTitle_telephone}" required="true" requiredMessage="Please provide contractor telephone"/>                                        
+                                    </div>
+                                </div>
+                                <!-- End .row -->
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-lg-12">
+                                <div class="row">
+                                    <!-- Start .row -->                                                        
+                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                        <h:outputLabel value="Email Address" for="email" />
+                                        <h:inputText id="email" class="form-control" value="#{contractorController.selected.email}" title="#{bundle.CreateContractorTitle_email}"
+                                                     required="true" requiredMessage="Please provide email address"/>
+                                    </div>
+                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                        <h:outputLabel value="Cell Number" for="cell_number" />
+                                        <h:inputText id="cell_number" class="form-control" value="#{contractorController.selected.cellNumber}" title="#{bundle.CreateContractorTitle_cellNumber}" 
+                                                     required="true" requiredMessage="Please provide cell number"/>
+                                    </div>
+                                </div>
+                                <!-- End .row -->
+                            </div>
+                        </div>
+                        <!-- End .form-group  -->
+                        <div class="form-group">
+                            <div class="col-lg-12">
+                                <div class="row">
+                                    <!-- Start .row -->   
+                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                        <h:outputLabel value="#{bundle.CreateContractorLabel_category}" for="category" />
+                                        <h:selectOneMenu id="category" class="form-control" value="#{contractorController.selected.category}" title="#{bundle.CreateContractorTitle_category}" >
+                                            <f:selectItems value="#{jobCategoryController.itemsAvailableSelectOne}"/>
+                                        </h:selectOneMenu>
+                                    </div>
+                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                        <h:outputLabel value="Address" for="address"  />
+                                        <h:inputTextarea cols="10" class="form-control" id="address" value="#{contractorController.selected.address}" title="#{bundle.CreateContractorTitle_address}" 
+                                                         required="true" requiredMessage="Please provide address"/>
+                                    </div>
+                                </div>
+                                <!-- End .row -->
+                            </div>
+                        </div>
+
+                        <!-- End .form-group  -->
+                        <div class="form-group">
+                            <div class="col-lg-12">
+                                <div class="row">
+                                    <!-- Start .row -->
+                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 text-left">
+                                        <h:commandLink action="#{contractorController.create()}" value="Save Contractor" class="btn btn-primary"></h:commandLink>
+                                    </div>
+                                </div>
+                                <!-- End .row -->
+                            </div>
+                        </div>
+                        <!-- End .form-group  -->
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="pull-right">
+                <div class="btn-group dropup mr10">
+                    <button type="button" class="btn btn-primary">Perform Actions</button>
+                    <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                        <span class="caret"></span>
+                        <span class="sr-only">Toggle Dropdown</span>
+                    </button>
+                    <ul class="dropdown-menu" role="menu" >
+
+                        <li data-toggle="modal" data-target="#customerEditModal">
+                            <h:commandLink rendered="#{loginController.loggedInUser.role eq 'admin'}"  immediate="true" action="#{customerController.prepareCreateUnlinkedCustomers()}" >Show Unlinked Customers</h:commandLink>
+                        </li>
+
+                    </ul>
+                </div>
+            </div>
+
+
+            <!-- Start Customer table -->
+            <div class="row">
+                <div class="col-lg-12">
+                    <!-- col-lg-12 start here -->
+                    <div class="panel panel-default plain toggle panelMove panelClose panelRefresh">
+
+
+                        <!-- Start .panel -->
+                        <div class="panel-heading">
+
+
+
+                            <h4 class="panel-title">Customer List</h4>
+                        </div>
+                        <div class="panel-body">
+                            <p:dataTable paginator="true" value="#{contractorController.items}" var="item" id="customer_list" 
+                                         rows="10" resizableColumns="true" paginatorPosition="bottom"
+                                         paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                         rowsPerPageTemplate="10,20,30"  >
+                                
+                                <p:column>
+                                    <f:facet name="header">
+                                        <h:outputText value="#{bundle.ListContractorTitle_name}"/>
+                                    </f:facet>
+                                    <h:outputText value="#{item.name}"/>
+                                </p:column>
+                                <p:column>
+                                    <f:facet name="header">
+                                        <h:outputText value="#{bundle.ListContractorTitle_telephone}"/>
+                                    </f:facet>
+                                    <h:outputText value="#{item.telephone}"/>
+                                </p:column>
+                                <p:column>
+                                    <f:facet name="header">
+                                        <h:outputText value="#{bundle.ListContractorTitle_email}"/>
+                                    </f:facet>
+                                    <h:outputText value="#{item.email}"/>
+                                </p:column>
+                                <p:column>
+                                    <f:facet name="header">
+                                        <h:outputText value="#{bundle.ListContractorTitle_cellNumber}"/>
+                                    </f:facet>
+                                    <h:outputText value="#{item.cellNumber}"/>
+                                </p:column>
+                                <p:column>
+                                    <f:facet name="header">
+                                        <h:outputText value="#{bundle.ListContractorTitle_address}"/>
+                                    </f:facet>
+                                    <h:outputText value="#{item.address}"/>
+                                </p:column>
+                                <p:column>
+                                    <f:facet name="header">
+                                        <h:outputText value="#{bundle.ListContractorTitle_category}"/>
+                                    </f:facet>
+                                    <h:outputText value="#{item.category.name}"/>
+                                </p:column>Ï
+                                <p:column>
+                                    <f:facet name="header">
+                                        <h:outputText value="&nbsp;"/>
+                                    </f:facet>
+                                    <h:commandLink class="fa fa-eye fa-fw" immediate="true" style="text-decoration: none;" action="#{contractorController.prepareView}" >
+                                        <f:setPropertyActionListener target="#{contractorController.selectedContractor}" value="#{item}"/>
+                                    </h:commandLink>
+                                    <h:commandLink class="fa fa-edit fa-fw" immediate="true" style="text-decoration: none;" action="#{contractorController.prepareView}" >
+                                        <f:setPropertyActionListener target="#{contractorController.selectedContractor}" value="#{item}"/>
+                                    </h:commandLink>
+                                    <h:commandLink class="fa fa-money fa-fw" immediate="true" style="text-decoration: none;" action="#{contractorController.prepareView}" >
+                                        <f:setPropertyActionListener target="#{contractorController.selectedContractor}" value="#{item}"/>
+                                    </h:commandLink>
+                                </p:column>
+                            </p:dataTable> 
+                            <h:outputText rendered="#{contractorController.items.rowCount == 0}" style="color: red;" value="No contractor records to display"> 
+
+                            </h:outputText>
+                        </div>
+
+                    </div>
+                    <!-- End .panel -->
+                </div>
+
+            </div>
+            <!-- End .dashboard table -->
+        </ui:define>
+    </ui:composition>
+
+</html>

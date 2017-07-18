@@ -1,0 +1,12 @@
+/* -----------------------------------------
+   Custom.css - put your own changes here 
+----------------------------------------- */
+.company-footer{
+    margin-bottom: 30px;
+}
+.company-footer-template{
+    padding-top: 30px;
+     z-index:-1;
+}
+
+

@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.ListContractorTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+            <h:outputText escape="false" value="#{bundle.ListContractorEmpty}" rendered="#{ListContractorTitle.items.rowCount == 0}"/>
+            <div class="row">
+                <div class="col-lg-12  p0">
+                    <!-- col-lg-12 start here -->
+                    <div class="panel panel-default plain toggle panelMove panelClose panelRefresh">
+                        <!-- Start .panel -->
+                        <div class="panel-heading">
+                            <h4 class="panel-title">Contractor List</h4>
+                        </div>
+                        <div class="panel-body">
+                            <h:panelGroup rendered="#{contractorController.items.rowCount > 0}">
+                                <p:dataTable paginator="true" value="#{contractorController.items}" var="item" id="customer_list" 
+                                             rows="10" resizableColumns="true" paginatorPosition="bottom"
+                                             paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                             rowsPerPageTemplate="10,20,30"  >
+                                   
+                                    <p:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="#{bundle.ListContractorTitle_name}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.name}"/>
+                                    </p:column>
+                                    <p:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="#{bundle.ListContractorTitle_telephone}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.telephone}"/>
+                                    </p:column>
+                                    <p:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="#{bundle.ListContractorTitle_email}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.email}"/>
+                                    </p:column>
+                                    <p:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="#{bundle.ListContractorTitle_cellNumber}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.cellNumber}"/>
+                                    </p:column>
+                                    <p:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="#{bundle.ListContractorTitle_address}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.address}"/>
+                                    </p:column>
+                                    <p:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="#{bundle.ListContractorTitle_category}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.category.name}"/>
+                                    </p:column>
+                                    <p:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="&nbsp;"/>
+                                        </f:facet>
+                                        <h:commandLink class="fa fa-eye fa-fw" immediate="true" style="text-decoration: none;" action="#{contractorController.prepareView}" >
+                                            <f:setPropertyActionListener target="#{contractorController.selectedContractor}" value="#{item}"/>
+                                        </h:commandLink>
+                                        <h:commandLink class="fa fa-edit fa-fw" immediate="true" style="text-decoration: none;" action="#{contractorController.prepareEdit}" >
+                                            <f:setPropertyActionListener target="#{contractorController.selectedContractor}" value="#{item}"/>
+                                        </h:commandLink>
+
+                                    </p:column>
+                                </p:dataTable>
+                            </h:panelGroup>
+
+                        </div>
+                    </div>
+                    <!-- End .panel -->
+                </div>
+
+            </div>
+
+
+            <br />
+            <h:commandLink action="#{contractorController.prepareCreate}" value="#{bundle.ListContractorCreateLink}"/>
+            <br />
+            <br />
+        </ui:define>
+    </ui:composition>
+
+</html>

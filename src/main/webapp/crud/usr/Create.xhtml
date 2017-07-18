@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="Basizi - Create New User"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:panelGroup id="messagePanel" layout="block">
+                <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
+            </h:panelGroup>
+            <div class="panel panel-default toggle panelMove panelClose panelRefresh">
+                <!-- Start .panel -->
+                <div class="panel-heading">
+                    <h4 class="panel-title"><h:outputText value="#{bundle.CreateUsrTitle}"></h:outputText></h4>
+                </div>
+                <div class="panel-body">
+                    <div class="form-horizontal" role="form">
+                        <div class="form-group">
+                            <div class="col-lg-12">
+                                <div class="row">
+                                    <!-- Start .row -->                                                        
+                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                        <h:outputLabel value="#{bundle.CreateUsrLabel_username}" for="username" />
+                                        <h:inputText id="username" class="form-control" value="#{usrController.selected.username}" title="#{bundle.CreateUsrTitle_username}" required="true" requiredMessage="#{bundle.CreateUsrRequiredMessage_username}"/>
+
+                                    </div>
+                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                        <h:outputLabel value="#{bundle.CreateUsrLabel_password}" for="password" />
+                                        <h:inputText id="password" class="form-control"  value="#{usrController.selected.password}" title="#{bundle.CreateUsrTitle_password}" required="true" requiredMessage="#{bundle.CreateUsrRequiredMessage_password}"/>
+
+                                    </div>
+                                </div>
+                                <!-- End .row -->
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-lg-12">
+                                <div class="row">
+                                    <!-- Start .row -->                                                        
+                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                        <h:outputLabel value="#{bundle.CreateUsrLabel_role}" for="role" />
+                                        <h:selectOneMenu  class="form-control" id="role" value="#{usrController.selected.role}" title="#{bundle.CreateUsrTitle_role}" required="true" requiredMessage="#{bundle.CreateUsrRequiredMessage_role}" >
+                                            <f:selectItem itemValue="" itemLabel="Select precuation" />
+                                            <f:selectItem itemValue="admin" itemLabel="Admin" />
+                                            <f:selectItem itemValue="normal" itemLabel="Normal" />
+                                        </h:selectOneMenu>
+                                    </div>
+                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                        <h:outputLabel value="#{bundle.CreateUsrLabel_staff}" for="staff" />
+                                        <h:selectOneMenu class="form-control"  id="staff" value="#{usrController.selected.staff}" title="#{bundle.CreateUsrTitle_staff}" required="true" requiredMessage="#{bundle.CreateUsrRequiredMessage_staff}">
+                                            <f:selectItems value="#{staffController.itemsAvailableSelectOne}"/>
+                                        </h:selectOneMenu>
+                                    </div>
+                                </div>
+                                <!-- End .row -->
+                            </div>
+                        </div>
+                        <!-- End .form-group  -->
+                        <div class="form-group">
+                            <div class="col-lg-12">
+                                <div class="row">
+                                    <!-- Start .row -->
+                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 text-left">
+                                        <h:commandLink action="#{usrController.create()}" value="Save User" class="btn btn-primary"></h:commandLink>
+                                    </div>
+                                </div>
+                                <!-- End .row -->
+                            </div>
+                        </div>
+                        <!-- End .form-group  -->
+                    </div>
+                </div>
+            </div>
+
+        </ui:define>
+    </ui:composition>
+
+</html>

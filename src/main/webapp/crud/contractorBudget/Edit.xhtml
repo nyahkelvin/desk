@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.EditContractorBudgetTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+            <h:form>
+                <h:panelGrid columns="2">
+                    <h:outputLabel value="#{bundle.EditContractorBudgetLabel_id}" for="id" />
+                    <h:inputText id="id" value="#{contractorBudgetController.selected.id}" title="#{bundle.EditContractorBudgetTitle_id}" required="true" requiredMessage="#{bundle.EditContractorBudgetRequiredMessage_id}"/>
+                    <h:outputLabel value="#{bundle.EditContractorBudgetLabel_year}" for="year" />
+                    <h:inputText id="year" value="#{contractorBudgetController.selected.year}" title="#{bundle.EditContractorBudgetTitle_year}" required="true" requiredMessage="#{bundle.EditContractorBudgetRequiredMessage_year}"/>
+                    <h:outputLabel value="#{bundle.EditContractorBudgetLabel_amount}" for="amount" />
+                    <h:inputText id="amount" value="#{contractorBudgetController.selected.amount}" title="#{bundle.EditContractorBudgetTitle_amount}" required="true" requiredMessage="#{bundle.EditContractorBudgetRequiredMessage_amount}"/>
+                    <h:outputLabel value="#{bundle.EditContractorBudgetLabel_contractor}" for="contractor" />
+                    <h:selectOneMenu id="contractor" value="#{contractorBudgetController.selected.contractor}" title="#{bundle.EditContractorBudgetTitle_contractor}" required="true" requiredMessage="#{bundle.EditContractorBudgetRequiredMessage_contractor}">
+                        <f:selectItems value="#{contractorController.itemsAvailableSelectOne}"/>
+                    </h:selectOneMenu>
+                </h:panelGrid>
+                <h:commandLink action="#{contractorBudgetController.update}" value="#{bundle.EditContractorBudgetSaveLink}"/>
+                <br />
+                <br />
+                <h:link outcome="View" value="#{bundle.EditContractorBudgetViewLink}"/>
+                <br />
+                <h:commandLink action="#{contractorBudgetController.prepareList}" value="#{bundle.EditContractorBudgetShowAllLink}" immediate="true"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.EditContractorBudgetIndexLink}" />
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

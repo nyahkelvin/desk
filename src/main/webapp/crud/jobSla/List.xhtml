@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.ListJobSlaTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:form styleClass="jsfcrud_list_form">
+                <h:panelGroup id="messagePanel" layout="block">
+                    <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+                </h:panelGroup>
+                <h:outputText escape="false" value="#{bundle.ListJobSlaEmpty}" rendered="#{jobSlaController.items.rowCount == 0}"/>
+                <h:panelGroup rendered="#{jobSlaController.items.rowCount > 0}">
+                    <h:outputText value="#{jobSlaController.pagination.pageFirstItem + 1}..#{jobSlaController.pagination.pageLastItem + 1}/#{jobSlaController.pagination.itemsCount}"/>&nbsp;
+                    <h:commandLink action="#{jobSlaController.previous}" value="#{bundle.Previous} #{jobSlaController.pagination.pageSize}" rendered="#{jobSlaController.pagination.hasPreviousPage}"/>&nbsp;
+                    <h:commandLink action="#{jobSlaController.next}" value="#{bundle.Next} #{jobSlaController.pagination.pageSize}" rendered="#{jobSlaController.pagination.hasNextPage}"/>&nbsp;
+                    <h:dataTable value="#{jobSlaController.items}" var="item" border="0" cellpadding="2" cellspacing="0" rowClasses="jsfcrud_odd_row,jsfcrud_even_row" rules="all" style="border:solid 1px">
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListJobSlaTitle_id}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.id}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListJobSlaTitle_fileUrl}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.fileUrl}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListJobSlaTitle_slaName}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.slaName}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListJobSlaTitle_job}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.job}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="&nbsp;"/>
+                            </f:facet>
+                            <h:commandLink action="#{jobSlaController.prepareView}" value="#{bundle.ListJobSlaViewLink}"/>
+                            <h:outputText value=" "/>
+                            <h:commandLink action="#{jobSlaController.prepareEdit}" value="#{bundle.ListJobSlaEditLink}"/>
+                            <h:outputText value=" "/>
+                            <h:commandLink action="#{jobSlaController.destroy}" value="#{bundle.ListJobSlaDestroyLink}"/>
+                        </h:column>
+                    </h:dataTable>
+                </h:panelGroup>
+                <br />
+                <h:commandLink action="#{jobSlaController.prepareCreate}" value="#{bundle.ListJobSlaCreateLink}"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.ListJobSlaIndexLink}"/>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

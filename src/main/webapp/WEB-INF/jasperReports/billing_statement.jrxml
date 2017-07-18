@@ -1,0 +1,533 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="billing_statement" pageWidth="612" pageHeight="792" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="58c8ee2d-b71e-417e-b388-02b9d7aea794">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="211"/>
+	<subDataset name="Table Dataset 1" uuid="17849f62-e731-43ac-a51c-e6b344e0abfe"/>
+	<subDataset name="dataset1" uuid="4998790b-b330-456a-b8cf-018879a759bb"/>
+	<parameter name="logoImagePath" class="java.lang.String"/>
+	<parameter name="names" class="java.lang.String"/>
+	<parameter name="amount" class="java.lang.String"/>
+	<parameter name="address" class="java.lang.String"/>
+	<parameter name="account_number" class="java.lang.String"/>
+	<parameter name="municipality_name" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT
+     account.`id` AS account_id,
+     account.`account_number` AS account_account_number,
+     account.`customer_id` AS account_customer_id,
+     account.`balance` AS account_balance,
+     account.`address` AS account_address,
+     account.`green_id` AS account_green_id,
+     account.`red_in` AS account_red_in,
+     account.`account_type` AS account_account_type,
+     account.`next_due_date` AS account_next_due_date,
+     account_payment.`id` AS account_payment_id,
+     account_payment.`account` AS account_payment_account,
+     account_payment.`amount` AS account_payment_amount,
+     account_payment.`transaction_date` AS account_payment_transaction_date,
+     account_payment.`usr` AS account_payment_usr,
+     account_payment.`balance` AS account_payment_balance,
+     account_type.`id` AS account_type_id,
+     account_type.`name` AS account_type_name,
+     customer.`id` AS customer_id,
+     customer.`surname` AS customer_surname,
+     customer.`names` AS customer_names,
+     customer.`cell_number` AS customer_cell_number,
+     customer.`email_address` AS customer_email_address,
+     customer.`date_created` AS customer_date_created,
+     customer.`created_by` AS customer_created_by,
+     customer.`address` AS customer_address
+FROM
+     `account` account INNER JOIN `account_payment` account_payment ON account.`id` = account_payment.`account`
+     INNER JOIN `account_type` account_type ON account.`account_type` = account_type.`id`
+     INNER JOIN `customer` customer ON account.`customer_id` = customer.`id`]]>
+	</queryString>
+	<field name="account_id" class="java.lang.Integer"/>
+	<field name="account_account_number" class="java.lang.String"/>
+	<field name="account_customer_id" class="java.lang.Integer"/>
+	<field name="account_balance" class="java.lang.Double"/>
+	<field name="account_address" class="java.lang.String"/>
+	<field name="account_green_id" class="java.lang.Boolean"/>
+	<field name="account_red_in" class="java.lang.Boolean"/>
+	<field name="account_account_type" class="java.lang.Integer"/>
+	<field name="account_next_due_date" class="java.sql.Date"/>
+	<field name="account_payment_id" class="java.lang.Integer"/>
+	<field name="account_payment_account" class="java.lang.Integer"/>
+	<field name="account_payment_amount" class="java.lang.Double"/>
+	<field name="account_payment_transaction_date" class="java.sql.Timestamp"/>
+	<field name="account_payment_usr" class="java.lang.Integer"/>
+	<field name="account_payment_balance" class="java.lang.Double"/>
+	<field name="account_type_id" class="java.lang.Integer"/>
+	<field name="account_type_name" class="java.lang.String"/>
+	<field name="customer_id" class="java.lang.Integer"/>
+	<field name="customer_surname" class="java.lang.String"/>
+	<field name="customer_names" class="java.lang.String"/>
+	<field name="customer_cell_number" class="java.lang.String"/>
+	<field name="customer_email_address" class="java.lang.String"/>
+	<field name="customer_date_created" class="java.sql.Timestamp"/>
+	<field name="customer_created_by" class="java.lang.Integer"/>
+	<field name="customer_address" class="java.lang.String"/>
+	<group name="account_account_number">
+		<groupExpression><![CDATA[$F{account_account_number}]]></groupExpression>
+	</group>
+	<group name="account_id">
+		<groupExpression><![CDATA[$F{account_id}]]></groupExpression>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<pageHeader>
+		<band height="80">
+			<staticText>
+				<reportElement uuid="e8072954-e1a6-430f-9667-002f3a1e56b2" x="169" y="10" width="100" height="20" forecolor="#3333FF"/>
+				<textElement>
+					<font size="16"/>
+				</textElement>
+				<text><![CDATA[Electricity]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="174ebe52-7570-43d3-a573-0fce55f4d795" x="169" y="30" width="100" height="12"/>
+				<textElement>
+					<font size="6"/>
+				</textElement>
+				<text><![CDATA[your account number]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="405183ac-516e-4512-b7d3-7c7c202d18c9" x="295" y="42" width="100" height="20"/>
+				<textElement/>
+				<text><![CDATA[*120*10210#]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="e8072954-e1a6-430f-9667-002f3a1e56b2" x="295" y="10" width="100" height="20" forecolor="#3333FF"/>
+				<textElement>
+					<font size="16"/>
+				</textElement>
+				<text><![CDATA[eServices]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="174ebe52-7570-43d3-a573-0fce55f4d795" x="295" y="30" width="100" height="12"/>
+				<textElement>
+					<font size="6"/>
+				</textElement>
+				<text><![CDATA[manage your bill via USSD]]></text>
+			</staticText>
+			<image>
+				<reportElement uuid="14c39375-1415-4060-8d53-51b5e9758751" x="143" y="5" width="26" height="25"/>
+				<imageExpression><![CDATA["/Users/kelvinashu/Documents/NetBeansProjects/crmScheduleSMSandEmail/web/WEB-INF/jasperReports/electricity.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement uuid="14c39375-1415-4060-8d53-51b5e9758751" x="269" y="5" width="26" height="25"/>
+				<imageExpression><![CDATA["/Users/kelvinashu/Documents/NetBeansProjects/crmScheduleSMSandEmail/web/WEB-INF/jasperReports/settings.png"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement uuid="174ebe52-7570-43d3-a573-0fce55f4d795" x="419" y="30" width="100" height="12"/>
+				<textElement>
+					<font size="6"/>
+				</textElement>
+				<text><![CDATA[municiplaity contacts]]></text>
+			</staticText>
+			<image>
+				<reportElement uuid="14c39375-1415-4060-8d53-51b5e9758751" x="393" y="5" width="26" height="25"/>
+				<imageExpression><![CDATA["/Users/kelvinashu/Documents/NetBeansProjects/crmScheduleSMSandEmail/web/WEB-INF/jasperReports/map_pin.png"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement uuid="405183ac-516e-4512-b7d3-7c7c202d18c9" stretchType="RelativeToBandHeight" x="419" y="42" width="144" height="36" isPrintInFirstWholeBand="true"/>
+				<textElement/>
+				<text><![CDATA[Cnr Cole & Graham Streets, Barkly East - 0800 201 726]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="e8072954-e1a6-430f-9667-002f3a1e56b2" x="419" y="10" width="100" height="20" forecolor="#3333FF"/>
+				<textElement>
+					<font size="16"/>
+				</textElement>
+				<text><![CDATA[contact]]></text>
+			</staticText>
+			<image>
+				<reportElement uuid="90a6da01-9dde-4aad-a241-1c91c52bbdaf" x="0" y="0" width="88" height="78"/>
+				<imageExpression><![CDATA[$P{logoImagePath}]]></imageExpression>
+			</image>
+			<textField>
+				<reportElement uuid="68bd8a19-e792-4538-bfc4-d3a94a352b3f" mode="Transparent" x="169" y="42" width="100" height="20" forecolor="#000000" backcolor="#FFFFFF"/>
+				<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" markup="none">
+					<font fontName="SansSerif" size="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{account_number}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="346">
+			<staticText>
+				<reportElement uuid="735f87f2-67e7-48f1-ac39-663a518dfe0c" x="0" y="41" width="100" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Service Location: ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="242594ce-a7ee-40c2-abb7-36ec41d9abb6" x="0" y="61" width="224" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Your electricity charges]]></text>
+			</staticText>
+			<line>
+				<reportElement uuid="592e0514-8422-4c89-98fd-b194ba5b1546" x="0" y="82" width="572" height="1"/>
+				<graphicElement>
+					<pen lineStyle="Double"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement uuid="074b8742-cff3-4fca-b863-ba1f7f1c6725" x="0" y="93" width="121" height="20"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Time of use - Summer]]></text>
+			</staticText>
+			<line>
+				<reportElement uuid="592e0514-8422-4c89-98fd-b194ba5b1546" x="0" y="40" width="572" height="1"/>
+				<graphicElement>
+					<pen lineStyle="Double"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement uuid="7f1574ea-c13a-4e2f-a4d7-dbb98296b569" x="0" y="113" width="344" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[299.00 kWh On-peak (Highest Price) @ R1.87 / kWh]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="7f1574ea-c13a-4e2f-a4d7-dbb98296b569" x="0" y="133" width="344" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[405.00 kWh Mid-peak (Mid Price) @ R1.56 / kWh]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="7f1574ea-c13a-4e2f-a4d7-dbb98296b569" x="0" y="153" width="344" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[1,296.00 kWh Off-peak (Lowest Price) @ R1.10 / kwh]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="3475c083-6deb-4f22-ad70-1616b794c6d3" x="0" y="185" width="100" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Delivery]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="b24c5e0c-c76d-46e3-8fe9-aab022872ae8" x="346" y="113" width="100" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[40.37]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="b24c5e0c-c76d-46e3-8fe9-aab022872ae8" x="346" y="133" width="100" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[45.36]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="b24c5e0c-c76d-46e3-8fe9-aab022872ae8" x="346" y="153" width="100" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[97.20]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="2e3b1df1-1adb-4e8d-8bca-466e20e199f6" x="346" y="185" width="100" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[109.15]]></text>
+			</staticText>
+			<line>
+				<reportElement uuid="ec6212c1-1e05-4a33-884e-d4afface851a" x="0" y="133" width="444" height="1"/>
+				<graphicElement>
+					<pen lineStyle="Dashed"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement uuid="ec6212c1-1e05-4a33-884e-d4afface851a" x="2" y="152" width="444" height="1"/>
+				<graphicElement>
+					<pen lineStyle="Dashed"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement uuid="ec6212c1-1e05-4a33-884e-d4afface851a" x="2" y="172" width="444" height="1"/>
+				<graphicElement>
+					<pen lineStyle="Dashed"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement uuid="ec6212c1-1e05-4a33-884e-d4afface851a" x="2" y="113" width="444" height="1"/>
+				<graphicElement>
+					<pen lineStyle="Dashed"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement uuid="38e14a8b-7fb5-40ec-b953-162ec16c4e61" x="2" y="185" width="442" height="1"/>
+				<graphicElement>
+					<pen lineStyle="Double"/>
+				</graphicElement>
+			</line>
+			<rectangle radius="3">
+				<reportElement uuid="e0c16c4b-487b-4abb-8022-dff4f52bc0dc" x="0" y="247" width="372" height="92"/>
+			</rectangle>
+			<image>
+				<reportElement uuid="6480cad0-eab4-475f-8397-47a8f40a0827" x="278" y="260" width="73" height="65"/>
+				<imageExpression><![CDATA["/Users/kelvinashu/Documents/NetBeansProjects/crmScheduleSMSandEmail/web/WEB-INF/jasperReports/absa_logo.jpg"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement uuid="5f3b0952-d80d-4b12-bfb4-f4f69baa2a7b" x="4" y="250" width="67" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Account Holder: ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="5f3b0952-d80d-4b12-bfb4-f4f69baa2a7b" x="3" y="271" width="260" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Account Number: ##################]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="5f3b0952-d80d-4b12-bfb4-f4f69baa2a7b" x="2" y="292" width="260" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Bank Name: ABSA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="5f3b0952-d80d-4b12-bfb4-f4f69baa2a7b" x="2" y="313" width="46" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Reference: ]]></text>
+			</staticText>
+			<componentElement>
+				<reportElement uuid="cc91d34a-bc60-4e6c-961b-dacd0cd19498" stretchType="RelativeToTallestObject" x="546" y="93" width="26" height="112"/>
+				<jr:barbecue xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" type="Code128C" drawText="false" checksumRequired="false" rotation="Left">
+					<jr:codeExpression><![CDATA["1234"]]></jr:codeExpression>
+				</jr:barbecue>
+			</componentElement>
+			<textField>
+				<reportElement uuid="13c585b1-bea1-41f7-bf39-fabea0db2169" mode="Transparent" x="295" y="61" width="277" height="20" forecolor="#000000" backcolor="#FFFFFF"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="SansSerif" size="10" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{names}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="34dced5f-df56-44cb-8174-0b645ac55148" mode="Transparent" x="100" y="41" width="372" height="20" forecolor="#000000" backcolor="#FFFFFF"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="SansSerif" size="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{address}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="a66f5d93-70e8-4533-a38d-2a16f57e9619" mode="Transparent" x="71" y="250" width="207" height="20" forecolor="#000000" backcolor="#FFFFFF"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="SansSerif" size="8" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{municipality_name}]]></textFieldExpression>
+			</textField>
+			<textField pattern="" isBlankWhenNull="false">
+				<reportElement uuid="c085150c-8c8f-45c5-864f-824a4d9c0ba4" mode="Transparent" x="48" y="313" width="214" height="20" forecolor="#000000" backcolor="#FFFFFF"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="SansSerif" size="8" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{account_number}]]></textFieldExpression>
+			</textField>
+			<image>
+				<reportElement uuid="a0ed068c-cd82-4ecb-8c35-1fdd9c324ced" x="2" y="227" width="19" height="20"/>
+				<imageExpression><![CDATA["/Users/kelvinashu/Documents/NetBeansProjects/crmScheduleSMSandEmail/web/WEB-INF/jasperReports/cut.png"]]></imageExpression>
+			</image>
+			<line>
+				<reportElement uuid="7585d6d6-f607-4eb9-be17-1435a352c4cb" x="21" y="236" width="551" height="1"/>
+				<graphicElement>
+					<pen lineStyle="Dashed"/>
+				</graphicElement>
+			</line>
+		</band>
+	</columnHeader>
+	<pageFooter>
+		<band height="99" splitType="Stretch">
+			<line direction="BottomUp">
+				<reportElement uuid="fa2f3c37-6b6f-4484-b0e1-34d4cd433bbd" x="0" y="70" width="572" height="1"/>
+				<graphicElement>
+					<pen lineStyle="Dashed"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement uuid="e9290b8c-19d3-47ae-9013-837d84c46915" x="98" y="50" width="168" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Reading Period]]></text>
+			</staticText>
+			<rectangle radius="3">
+				<reportElement uuid="cdfac5ee-e6c9-42a2-b1f1-b22db7a68770" x="412" y="2" width="100" height="43" forecolor="#000000"/>
+			</rectangle>
+			<line>
+				<reportElement uuid="00238e09-1878-46bc-bc3d-74be7ba927e3" x="0" y="95" width="572" height="1"/>
+				<graphicElement>
+					<pen lineStyle="Double"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement uuid="d0ccd011-880b-4530-8094-a1c9da00965b" x="330" y="76" width="80" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[3098747]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="392353b6-9ba9-4d4b-9986-ebb3daae921b" x="268" y="50" width="57" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[No of Days]]></text>
+			</staticText>
+			<line>
+				<reportElement uuid="b98083b3-45fd-427c-9189-e43451581f87" x="326" y="51" width="1" height="45"/>
+				<graphicElement>
+					<pen lineStyle="Dashed"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement uuid="15cdae2e-cf32-414c-aeb9-9113de4f943f" x="417" y="50" width="83" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Previous Reading]]></text>
+			</staticText>
+			<line>
+				<reportElement uuid="b98083b3-45fd-427c-9189-e43451581f87" x="414" y="51" width="1" height="45"/>
+				<graphicElement>
+					<pen lineStyle="Dashed"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement uuid="e41f855d-d67f-4320-91e9-32a26ae74578" x="266" y="75" width="56" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[60]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="9c60f8bc-f7a9-42a3-ac85-f99150f95708" x="95" y="76" width="167" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[September 01 to October 31]]></text>
+			</staticText>
+			<line>
+				<reportElement uuid="b98083b3-45fd-427c-9189-e43451581f87" x="94" y="50" width="1" height="45"/>
+				<graphicElement>
+					<pen lineStyle="Dashed"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement uuid="15cdae2e-cf32-414c-aeb9-9113de4f943f" x="330" y="50" width="80" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Current Reading]]></text>
+			</staticText>
+			<componentElement>
+				<reportElement uuid="4b780ab7-3d4a-4150-b834-0ffcc2efaaad" x="519" y="0" width="53" height="50"/>
+				<jr:DataMatrix xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" orientation="90" textPosition="bottom">
+					<jr:codeExpression><![CDATA[4978494]]></jr:codeExpression>
+				</jr:DataMatrix>
+			</componentElement>
+			<staticText>
+				<reportElement uuid="d0ccd011-880b-4530-8094-a1c9da00965b" x="503" y="75" width="69" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[109.15]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="66efd7e3-5522-48d5-b9d9-a3339c4f9fbf" x="506" y="50" width="66" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[kWh Used]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="cc0d5a0d-bb4c-4f5c-99a1-18cd60424880" x="0" y="50" width="94" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Metre No]]></text>
+			</staticText>
+			<line>
+				<reportElement uuid="b98083b3-45fd-427c-9189-e43451581f87" x="502" y="50" width="1" height="45"/>
+				<graphicElement>
+					<pen lineStyle="Dashed"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement uuid="51b3ef4c-0a14-4b85-b6df-fdcf7e6209ad" x="412" y="15" width="27" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[ZAR]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="d0ccd011-880b-4530-8094-a1c9da00965b" x="417" y="75" width="80" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[3098920]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="b6dc9fb0-628f-4973-8d9a-f97a4cfaa10b" x="0" y="75" width="94" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[20877384]]></text>
+			</staticText>
+			<line>
+				<reportElement uuid="e045fdf8-705e-4d60-a575-ae22f5233d33" x="0" y="51" width="572" height="1"/>
+				<graphicElement>
+					<pen lineStyle="Dashed"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement uuid="b98083b3-45fd-427c-9189-e43451581f87" x="262" y="50" width="1" height="45"/>
+				<graphicElement>
+					<pen lineStyle="Dashed"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement uuid="3475c083-6deb-4f22-ad70-1616b794c6d3" x="0" y="15" width="224" height="20"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Your Total Electricity Charges]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="1bc716b2-0825-469b-8a48-45b65a7bcf14" mode="Transparent" x="440" y="15" width="66" height="20" forecolor="#000000" backcolor="#FFFFFF"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="SansSerif" size="10" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{amount}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+</jasperReport>
