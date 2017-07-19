@@ -20,6 +20,7 @@ public class BaseController {
     protected static final String CURRENT_USER = "current_user_object";
     protected static final String CURRENT_CONTRACTOR = "current_contractor_object";
     protected static final String CURRENT_JOB = "current_job_object";
+    protected static final String CURRENT_LOCATION = "current_location_object";
     protected static final String CURRENT_COUNCILLOR_USER = "current_user_councillor_object";
     protected static final String CURRENT_ACCOUNT = "current_account_object";
     protected static final String CURRENT_DISASTER = "current_disaster_object";

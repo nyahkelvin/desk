@@ -10,6 +10,10 @@ import java.util.Map;
 import java.util.ResourceBundle;
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
+import javax.faces.component.UIComponent;
+import javax.faces.context.FacesContext;
+import javax.faces.convert.Converter;
+import javax.faces.convert.FacesConverter;
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 import javax.faces.model.SelectItem;
@@ -71,7 +75,7 @@ public class JobController
     }
 
     public JobLocation getSelectedLocation() {
-        return this.selectedLocation;
+        return (JobLocation) getSessionMap().get(CURRENT_LOCATION);
     }
 
     public void setSelectedLocation(JobLocation selectedLocation) {
@@ -170,6 +174,7 @@ public class JobController
 
     public String prepareDashboardGraph() {
         System.out.println("selected location: " + this.selectedLocation.getName());
+        getSessionMap().put(CURRENT_LOCATION, this.selectedLocation);
         this.searching = true;
         return null;
     }
@@ -271,14 +276,16 @@ public class JobController
             this.current.setDateCreated(new Date());
             this.current.setBaseBudget(0.0D);
             this.current.setUsr(usr);
-            this.current.setDueDate(DateUtil.addHours(this.current.getPriority().getRef().intValue(), this.current.getDateCreated()));
+            this.current.setDueDate(DateUtil.addHours(this.current.getPriority().getRef(), this.current.getDateCreated()));
 
             getFacade().create(this.current);
+            //getSessionMap().put(CURRENT_LOCATION, current.getLocation());
 
             EmailHelper em = new EmailHelper();
             String msg = "Dear contractor,\n\nA Job has been allocated to you.\n\nJob Details:\n\nCategory:" + this.current.getSubCategory().getName() + "\nContractor:" + this.current.getContractor().getName() + "\nJob Reference:" + this.current.getPaddedID() + ".\n\nPlease respond accordingly." + "\n\nRegards,\nEkurhuleni Metropolitan Municipality.";
 
             JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("JobCreated"));
+            this.searching = false;
             return prepareCreate();
         } catch (Exception e) {
             JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
@@ -413,5 +420,45 @@ public class JobController
 
     public Job getJob(Integer id) {
         return (Job) this.ejbFacade.find(id);
+    }
+
+    @FacesConverter(forClass = Job.class)
+    public static class JobControllerConverter implements Converter {
+
+        @Override
+        public Object getAsObject(FacesContext facesContext, UIComponent component, String value) {
+            if (value == null || value.length() == 0) {
+                return null;
+            }
+            JobController controller = (JobController) facesContext.getApplication().getELResolver().
+                    getValue(facesContext.getELContext(), null, "jobController");
+            return controller.getJob(getKey(value));
+        }
+
+        java.lang.Integer getKey(String value) {
+            java.lang.Integer key;
+            key = Integer.valueOf(value);
+            return key;
+        }
+
+        String getStringKey(java.lang.Integer value) {
+            StringBuilder sb = new StringBuilder();
+            sb.append(value);
+            return sb.toString();
+        }
+
+        @Override
+        public String getAsString(FacesContext facesContext, UIComponent component, Object object) {
+            if (object == null) {
+                return null;
+            }
+            if (object instanceof Job) {
+                Job o = (Job) object;
+                return getStringKey(o.getId());
+            } else {
+                throw new IllegalArgumentException("object " + object + " is of type " + object.getClass().getName() + "; expected type: " + Job.class.getName());
+            }
+        }
+
     }
 }

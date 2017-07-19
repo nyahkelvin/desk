@@ -5,6 +5,10 @@ import java.util.Date;
 import java.util.ResourceBundle;
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
+import javax.faces.component.UIComponent;
+import javax.faces.context.FacesContext;
+import javax.faces.convert.Converter;
+import javax.faces.convert.FacesConverter;
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 import javax.faces.model.SelectItem;
@@ -186,7 +190,47 @@ public class StaffController
         return JsfUtil.getSelectItems(this.ejbFacade.findAll(), true);
     }
 
-    public Staff getStaff(Integer id) {
-        return (Staff) this.ejbFacade.find(id);
+    public Staff getStaff(java.lang.Integer id) {
+        return ejbFacade.find(id);
+    }
+
+    @FacesConverter(forClass = Staff.class)
+    public static class StaffControllerConverter implements Converter {
+
+        @Override
+        public Object getAsObject(FacesContext facesContext, UIComponent component, String value) {
+            if (value == null || value.length() == 0) {
+                return null;
+            }
+            StaffController controller = (StaffController) facesContext.getApplication().getELResolver().
+                    getValue(facesContext.getELContext(), null, "staffController");
+            return controller.getStaff(getKey(value));
+        }
+
+        java.lang.Integer getKey(String value) {
+            java.lang.Integer key;
+            key = Integer.valueOf(value);
+            return key;
+        }
+
+        String getStringKey(java.lang.Integer value) {
+            StringBuilder sb = new StringBuilder();
+            sb.append(value);
+            return sb.toString();
+        }
+
+        @Override
+        public String getAsString(FacesContext facesContext, UIComponent component, Object object) {
+            if (object == null) {
+                return null;
+            }
+            if (object instanceof Staff) {
+                Staff o = (Staff) object;
+                return getStringKey(o.getId());
+            } else {
+                throw new IllegalArgumentException("object " + object + " is of type " + object.getClass().getName() + "; expected type: " + Staff.class.getName());
+            }
+        }
+
     }
 }

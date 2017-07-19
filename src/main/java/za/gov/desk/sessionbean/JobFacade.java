@@ -37,7 +37,7 @@ public class JobFacade
     String sql = "SELECT j FROM Job j WHERE j.completed = :completed AND :nowDate > j.dueDate ";
     
     TypedQuery createQuery = getEntityManager().createQuery(sql, Job.class);
-    createQuery.setParameter("completed", Boolean.valueOf(completed));
+    createQuery.setParameter("completed", completed);
     createQuery.setParameter("nowDate", nowDate);
     return createQuery.getResultList();
   }
@@ -46,7 +46,7 @@ public class JobFacade
   {
     String sql = "SELECT j FROM Job j WHERE j.completed = :completed AND :nowDate > j.dueDate AND j.location.id = :location ";
     TypedQuery createQuery = getEntityManager().createQuery(sql, Job.class);
-    createQuery.setParameter("completed", Boolean.valueOf(completed));
+    createQuery.setParameter("completed", completed);
     createQuery.setParameter("nowDate", nowDate);
     createQuery.setParameter("location", location.getId());
     return createQuery.getResultList();
@@ -56,7 +56,7 @@ public class JobFacade
   {
     String psql = "SELECT j FROM Job j WHERE j.completed = :completed";
     Query query = getEntityManager().createQuery(psql, Job.class);
-    query.setParameter("completed", Boolean.valueOf(completed));
+    query.setParameter("completed", completed);
     return query.getResultList();
   }
   
@@ -64,7 +64,7 @@ public class JobFacade
   {
     String psql = "SELECT j FROM Job j WHERE j.completed = :completed AND j.location.id = :location";
     Query query = getEntityManager().createQuery(psql, Job.class);
-    query.setParameter("completed", Boolean.valueOf(completed));
+    query.setParameter("completed", completed);
     query.setParameter("location", location.getId());
     return query.getResultList();
   }
@@ -125,7 +125,7 @@ public class JobFacade
     TypedQuery createQuery = getEntityManager().createQuery(sql, Job.class);
     createQuery.setParameter("dateA", dateA);
     createQuery.setParameter("dateB", dateB);
-    createQuery.setParameter("completed", Boolean.valueOf(completed));
+    createQuery.setParameter("completed", completed);
     return createQuery.getResultList();
   }
   
@@ -136,7 +136,7 @@ public class JobFacade
     TypedQuery createQuery = getEntityManager().createQuery(sql, Job.class);
     createQuery.setParameter("dateA", dateA);
     createQuery.setParameter("dateB", dateB);
-    createQuery.setParameter("completed", Boolean.valueOf(completed));
+    createQuery.setParameter("completed", completed);
     createQuery.setParameter("location", location);
     return createQuery.getResultList();
   }
