@@ -279,7 +279,6 @@ public class JobController
             this.current.setDueDate(DateUtil.addHours(this.current.getPriority().getRef(), this.current.getDateCreated()));
 
             getFacade().create(this.current);
-            //getSessionMap().put(CURRENT_LOCATION, current.getLocation());
 
             EmailHelper em = new EmailHelper();
             String msg = "Dear contractor,\n\nA Job has been allocated to you.\n\nJob Details:\n\nCategory:" + this.current.getSubCategory().getName() + "\nContractor:" + this.current.getContractor().getName() + "\nJob Reference:" + this.current.getPaddedID() + ".\n\nPlease respond accordingly." + "\n\nRegards,\nEkurhuleni Metropolitan Municipality.";
