@@ -12,8 +12,13 @@ import javax.security.auth.login.AccountLockedException;
 import javax.security.auth.login.AccountNotFoundException;
 import javax.security.auth.login.FailedLoginException;
 import javax.security.auth.login.LoginException;
+import javax.ws.rs.client.Client;
+import javax.ws.rs.client.ClientBuilder;
+import javax.ws.rs.core.MediaType;
 import org.apache.log4j.Logger;
+import za.gov.desk.dao.Customer;
 import za.gov.desk.entity.Usr;
+import za.gov.desk.jsf.util.Activation;
 import za.gov.desk.sessionbean.StaffFacade;
 
 @ManagedBean(name = "loginController")
@@ -28,6 +33,20 @@ public class LoginController
     private String password;
     @EJB
     private StaffFacade ejbFacade;
+    
+    private static final String REST_URI
+            = "http://158.69.199.58:8080/activation/rest/xml/client/query";
+    private final Client client = ClientBuilder.newClient();
+
+   
+
+    public Customer getJsonCustomer(String companyName) {
+        return client
+                .target(REST_URI)
+                .queryParam("companyName", companyName)
+                .request(MediaType.APPLICATION_JSON)
+                .get(Customer.class);
+    }
 
     private StaffFacade getFacade() {
         return this.ejbFacade;
@@ -69,6 +88,11 @@ public class LoginController
     public String login() {
         try {
             LOGGER.info("Entering login method");
+
+            if(!Activation.isActive()){
+                addErrorAlert("Ooops!", "System Locked");
+                return "/login.xhtml";
+            }
             Usr usr = getFacade().authenticate(this.username, this.password);
             if (usr == null) {
                 addErrorAlert("Error", "Invalid login credentials.");
